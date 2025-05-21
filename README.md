@@ -42,6 +42,7 @@ docker compose up --build
 ```
 
 # Структура проекта:
+```
 appeal
 │   .dockerignore
 │   .env
@@ -99,3 +100,4 @@ appeal
     │
     └───types
             index.d.ts
+```
