@@ -48,19 +48,6 @@ export const allAppealsResponse = z.array(z.object({
     createAt: z.date()
 }));
 
-
-export const createAppealSchema = z.object({
-    schema: z.object({
-        tags: z.array(z.literal('Appeal')),
-        body: createAppealPayload,
-        response: z.object({
-            200: z.number().int(),
-            400: badRequest,
-            500: internalServerError
-        })
-    })
-});
-
 export type TCreateAppealPayload = z.infer<typeof createAppealPayload>;
 export type TAppealId = z.infer<typeof appealId>;
 export type TOrderQuery = z.infer<typeof orderQuery>;
