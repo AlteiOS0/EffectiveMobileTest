@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AppealStatus {
+  new
+  in_working
+  completed
+  cancelled
+
+  @@map("appeal_status")
+}
+
+model Appeal {
+  id Int @unique @default(autoincrement())
+  topic String
+  description String
+  status AppealStatus @default(new)
+  createAt DateTime @default(now()) @map("create_at")
+  answer Answer?
+
+  @@map("appeals")
+}
+
+model Answer {
+  id Int @unique @default(autoincrement())
+  answer String
+  createAt DateTime @default(now()) @map("create_at")
+  appealId Int @unique @map("appeal_id")
+  appeal Appeal @relation(fields: [appealId], references: [id], onDelete: Cascade)
+
+  @@map("answers")
+}
